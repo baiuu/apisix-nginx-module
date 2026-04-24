@@ -26,6 +26,9 @@ ngx_http_apisix_set_real_ip(ngx_http_request_t *r, const u_char *text, size_t le
 
 ngx_int_t
 ngx_http_apisix_set_proxy_request_buffering(ngx_http_request_t *r, int on);
+
+ngx_int_t
+ngx_http_apisix_set_proxy_buffering(ngx_http_request_t *r, int on);
 ]])
 local _M = {}
 
@@ -73,6 +76,17 @@ function _M.set_proxy_request_buffering(on)
     local ret = C.ngx_http_apisix_set_proxy_request_buffering(r, on and 1 or 0)
     if ret == NGX_ERROR then
         return nil, "error while setting proxy_request_buffering"
+    end
+
+    return true
+end
+
+
+function _M.set_proxy_buffering(on)
+    local r = get_request()
+    local ret = C.ngx_http_apisix_set_proxy_buffering(r, on and 1 or 0)
+    if ret == NGX_ERROR then
+        return nil, "error while setting proxy_buffering"
     end
 
     return true

@@ -39,6 +39,8 @@ typedef struct {
     unsigned             upstream_ssl_verify_set:1;
     unsigned             upstream_pass_trailers:1;
     unsigned             upstream_pass_trailers_set:1;
+    unsigned             proxy_buffering:1;
+    unsigned             proxy_buffering_set:1;
 } ngx_http_apisix_ctx_t;
 
 
@@ -71,4 +73,7 @@ char * ngx_http_apisix_error_log_request_id(ngx_conf_t *cf, ngx_command_t *cmd, 
 
 ngx_int_t ngx_http_apisix_set_upstream_pass_trailers(ngx_http_request_t *r, int on);
 ngx_int_t ngx_http_apisix_is_upstream_pass_trailers(ngx_http_request_t *r);
+
+ngx_int_t ngx_http_apisix_set_proxy_buffering(ngx_http_request_t *r, int on);
+ngx_flag_t ngx_http_apisix_is_proxy_buffering(ngx_http_request_t *r, ngx_flag_t static_conf);
 #endif /* _NGX_HTTP_APISIX_H_INCLUDED_ */

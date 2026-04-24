@@ -672,6 +672,39 @@ ngx_http_apisix_is_request_buffering(ngx_http_request_t *r, ngx_flag_t static_co
 
 
 ngx_int_t
+ngx_http_apisix_set_proxy_buffering(ngx_http_request_t *r, int on)
+{
+    ngx_http_apisix_ctx_t       *ctx;
+
+    ctx = ngx_http_apisix_get_module_ctx(r);
+
+    if (ctx == NULL) {
+        return NGX_ERROR;
+    }
+
+    ctx->proxy_buffering = on;
+    ctx->proxy_buffering_set = 1;
+    return NGX_OK;
+}
+
+
+ngx_flag_t
+ngx_http_apisix_is_proxy_buffering(ngx_http_request_t *r, ngx_flag_t static_conf)
+{
+    ngx_http_apisix_ctx_t          *ctx;
+
+    ctx = ngx_http_apisix_get_module_ctx(r);
+
+    if (ctx != NULL && ctx->proxy_buffering_set) {
+        return ctx->proxy_buffering;
+    }
+
+    /* use the static conf if we haven't changed it dynamically */
+    return static_conf;
+}
+
+
+ngx_int_t
 ngx_http_apisix_is_request_header_set(ngx_http_request_t *r)
 {
     ngx_http_apisix_ctx_t          *ctx;

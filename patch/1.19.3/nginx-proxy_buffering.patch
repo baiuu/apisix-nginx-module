@@ -1,0 +1,15 @@
+﻿diff --git src/http/ngx_http_upstream.c src/http/ngx_http_upstream.c
+index XXXXXXX..XXXXXXX 100644
+--- src/http/ngx_http_upstream.c
++++ src/http/ngx_http_upstream.c
+@@ -2924,6 +2924,10 @@ ngx_http_upstream_send_response(ngx_http_request_t *r,
+         return;
+     }
+
++
++#if (NGX_HTTP_APISIX)
++    u->buffering = ngx_http_apisix_is_proxy_buffering(r, u->buffering);
++#endif
+     u->header_sent = 1;
+
+     if (u->upgrade) {
