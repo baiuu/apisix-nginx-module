@@ -1,15 +1,15 @@
-﻿diff --git src/http/ngx_http_upstream.c src/http/ngx_http_upstream.c
+diff --git src/http/ngx_http_upstream.c src/http/ngx_http_upstream.c
 index XXXXXXX..XXXXXXX 100644
 --- src/http/ngx_http_upstream.c
 +++ src/http/ngx_http_upstream.c
-@@ -2995,6 +2995,10 @@ ngx_http_upstream_send_response(ngx_http_request_t *r,
-         return;
-     }
-
-+
+@@ -2988,6 +2988,10 @@ ngx_http_upstream_send_response(ngx_http_request_t *r,
+     ngx_connection_t          *c;
+     ngx_http_core_loc_conf_t  *clcf;
+ 
 +#if (NGX_HTTP_APISIX)
 +    u->buffering = ngx_http_apisix_is_proxy_buffering(r, u->buffering);
 +#endif
-     u->header_sent = 1;
-
-     if (u->upgrade) {
++
+     rc = ngx_http_send_header(r);
+ 
+     if (rc == NGX_ERROR || rc > NGX_OK || r->post_action) {
