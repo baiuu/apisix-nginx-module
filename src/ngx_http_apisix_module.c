@@ -695,6 +695,13 @@ ngx_http_apisix_is_proxy_buffering(ngx_http_request_t *r, ngx_flag_t static_conf
 
     ctx = ngx_http_apisix_get_module_ctx(r);
 
+    ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+                  "apisix proxy_buffering: ctx=%p, set=%d, val=%d, static=%d",
+                  ctx,
+                  ctx ? ctx->proxy_buffering_set : -1,
+                  ctx ? ctx->proxy_buffering : -1,
+                  static_conf);
+
     if (ctx != NULL && ctx->proxy_buffering_set) {
         return ctx->proxy_buffering;
     }
