@@ -693,7 +693,7 @@ ngx_http_apisix_is_proxy_buffering(ngx_http_request_t *r, ngx_flag_t static_conf
 {
     ngx_http_apisix_ctx_t          *ctx;
 
-    ctx = ngx_http_get_module_ctx(r, ngx_http_apisix_module);
+    ctx = ngx_http_apisix_get_module_ctx(r);
 
     if (ctx != NULL && ctx->proxy_buffering_set) {
         return ctx->proxy_buffering;
